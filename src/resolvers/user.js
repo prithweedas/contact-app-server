@@ -5,7 +5,9 @@ export default {
   Query: {
     getUser: (parent, { email }, { models }) =>
       models.User.findOne({ where: { email } }),
-    getAllUsers: (parent, args, { models }) => models.User.findAll()
+    getAllUsers: (parent, args, { models, user }) => {
+      return models.User.findAll()
+    }
   },
   Mutation: {
     register: async (parent, args, { models }) => {

@@ -6,6 +6,7 @@ import { mergeTypes, fileLoader, mergeResolvers } from "merge-graphql-schemas"
 import path from "path"
 import cors from "cors"
 import jwt from "jsonwebtoken"
+import _ from "lodash"
 
 import models from "./db"
 import { refreshTokens } from "./auth"
@@ -36,7 +37,7 @@ const addUser = async (req, res, next) => {
         res.set("x-token", newTokens.token)
         res.set("x-refresh-token", newTokens.refreshToken)
       }
-      req.user = newTokens.user
+      req.user = _.pick(newTokens.user, ["id", "username"])
     }
   }
   next()
@@ -50,23 +51,22 @@ const schema = makeExecutableSchema({
   resolvers
 })
 
+app.use(cors("*"))
+
 app.use(addUser)
 
-app.use(cors("*"))
 app.use(
   endpointURL,
   bodyParser.json(),
-  graphqlExpress({
+  graphqlExpress(req => ({
     schema,
     context: {
       models,
       SECRET,
       SECRET2,
-      user: {
-        id: 1
-      }
+      user: req.user
     }
-  })
+  }))
 )
 
 app.use(
@@ -79,6 +79,6 @@ app.use(
 models.sequelize.sync({}).then(() => {
   app.listen(PORT, err => {
     if (err) throw err
-    console.log("Server running on port 3001")
+    console.log(`Server running on port ${PORT}`)
   })
 })
