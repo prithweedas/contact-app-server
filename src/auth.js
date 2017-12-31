@@ -15,8 +15,7 @@ export const tryLogin = async (email, password, models, SECRET, SECRET2) => {
       ]
     }
   }
-
-  const valid = bcrypt.compare(password, user.password)
+  const valid = await bcrypt.compare(password, user.password)
   if (!valid) {
     return {
       ok: false,
