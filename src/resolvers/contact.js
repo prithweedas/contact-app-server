@@ -1,12 +1,23 @@
+import FormatErrors from "../formatErrors"
+
 export default {
   Query: {
-    getContact: (parent, { id }, { models }) =>
-      models.Contact.findOne({ where: { id } })
+    getAllContacts: (parent, args, { models, user }) =>
+      models.Contact.findAll({ where: { owner: user.id } })
   },
   Mutation: {
-    createContact: (parent, args, { models, user }) => {
-      console.log(args, user)
-      return models.Contact.create({ ...args, owner: user.id })
+    createContact: async (parent, args, { models, user }) => {
+      try {
+        await models.Contact.create({ ...args, owner: user.id })
+        return {
+          ok: true
+        }
+      } catch (err) {
+        return {
+          ok: false,
+          errors: FormatErrors(err)
+        }
+      }
     }
   }
 }

@@ -51,6 +51,8 @@ const schema = makeExecutableSchema({
   resolvers
 })
 
+app.use("/static", express.static(path.join(__dirname, "static")))
+
 app.use(cors("*"))
 
 app.use(addUser)
@@ -76,7 +78,7 @@ app.use(
   })
 )
 
-models.sequelize.sync({}).then(() => {
+models.sequelize.sync().then(() => {
   app.listen(PORT, err => {
     if (err) throw err
     console.log(`Server running on port ${PORT}`)

@@ -7,10 +7,15 @@ export default `
     }
 
     type Query {
-        getContact(id:Int!):Contact!
+        getAllContacts:[Contact!]
+    }
+
+    type ContactResponse {
+        ok: Boolean!
+        errors: [Error!]
     }
 
     type Mutation{
-        createContact(name: String!, email: String!, phone: String!): Contact!
+        createContact(name: String!, email: String!, phone: String!): ContactResponse!
     }
 `

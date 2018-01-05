@@ -7,6 +7,10 @@ export default {
       models.User.findOne({ where: { email } }),
     getAllUsers: (parent, args, { models, user }) => {
       return models.User.findAll()
+    },
+    isAuthenticated: (parent, args, { user }) => {
+      if (user) return !!user.id
+      else return false
     }
   },
   Mutation: {

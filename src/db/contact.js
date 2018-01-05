@@ -4,10 +4,11 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     email: {
-      type: DataTypes.STRING,
-      unique: true
+      type: DataTypes.STRING
     },
-    phone: DataTypes.STRING
+    phone: {
+      type: DataTypes.STRING
+    }
   })
 
   Contact.associate = models => {
