@@ -10,6 +10,10 @@ export default `
         getAllContacts:[Contact!]
     }
 
+    type Subscription {
+        contactAdded(owner:Int!): Contact
+    }
+
     type ContactResponse {
         ok: Boolean!
         errors: [Error!]

@@ -8,9 +8,20 @@ export default {
     getAllUsers: (parent, args, { models, user }) => {
       return models.User.findAll()
     },
-    isAuthenticated: (parent, args, { user }) => {
-      if (user) return !!user.id
-      else return false
+    isAuthenticated: async (parent, args, { models, user }) => {
+      if (!!user.id) {
+        try {
+          await models.User.findOne({ where: { id: user.id } })
+          return {
+            auth: true,
+            userId: user.id
+          }
+        } catch (error) {
+          return {
+            auth: false
+          }
+        }
+      } else return false
     }
   },
   Mutation: {

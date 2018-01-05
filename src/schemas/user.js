@@ -16,7 +16,10 @@ export default `
        refreshToken: String
        errors:[Error!] 
     }
-
+    type authResponse{
+        auth: Boolean!
+        userId: Int
+    }
     type Error{
         path: String!
         message:String
@@ -24,7 +27,7 @@ export default `
     type Query {
         getUser(email:String!):User!
         getAllUsers:[User!]
-        isAuthenticated: Boolean!
+        isAuthenticated: authResponse!
     }
 
     type Mutation{

@@ -7,6 +7,9 @@ import path from "path"
 import cors from "cors"
 import jwt from "jsonwebtoken"
 import _ from "lodash"
+import { createServer } from "http"
+import { execute, subscribe } from "graphql"
+import { SubscriptionServer } from "subscriptions-transport-ws"
 
 import models from "./db"
 import { refreshTokens } from "./auth"
@@ -78,9 +81,20 @@ app.use(
   })
 )
 
+const server = createServer(app)
+
 models.sequelize.sync().then(() => {
-  app.listen(PORT, err => {
-    if (err) throw err
-    console.log(`Server running on port ${PORT}`)
+  server.listen(PORT, () => {
+    new SubscriptionServer(
+      {
+        execute,
+        subscribe,
+        schema
+      },
+      {
+        server: server,
+        path: "/subscriptions"
+      }
+    )
   })
 })
