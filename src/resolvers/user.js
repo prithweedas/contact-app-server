@@ -21,7 +21,7 @@ export default {
             auth: false
           }
         }
-      } else return false
+      } else return { auth: false }
     }
   },
   Mutation: {
