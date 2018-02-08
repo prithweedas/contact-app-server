@@ -9,19 +9,14 @@ import Sequelize from "sequelize"
 //   }
 // })
 
-const sequelize = new Sequelize(
-  process.env.MSSQL_DBNAME,
-  process.env.MSSQL_USERNAME,
-  process.env.MSSQL_PASSWORD,
-  {
-    host: process.env.MSSQL_HOST,
-    dialect: "mssql",
-    operatorsAliases: Sequelize.Op,
-    dialectOptions: {
-      encrypt: true
-    }
+const sequelize = new Sequelize("testbata", "prithwee@prithwee", "Prith*977", {
+  host: "prithwee.database.windows.net",
+  dialect: "mssql",
+  operatorsAliases: Sequelize.Op,
+  dialectOptions: {
+    encrypt: true
   }
-)
+})
 
 const models = {
   User: sequelize.import("./user.js"),
