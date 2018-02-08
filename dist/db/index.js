@@ -23,8 +23,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //   }
 // })
 
-var sequelize = new _sequelize2.default("testbata", "prithwee@prithwee", "Prith*977", {
-  host: "prithwee.database.windows.net",
+var sequelize = new _sequelize2.default(process.env.MSSQL_DBNAME, process.env.MSSQL_USERNAME, process.env.MSSQL_PASSWORD, {
+  host: process.env.MSSQL_HOST,
   dialect: "mssql",
   operatorsAliases: _sequelize2.default.Op,
   dialectOptions: {
