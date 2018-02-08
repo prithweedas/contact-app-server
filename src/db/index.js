@@ -11,10 +11,10 @@ import Sequelize from "sequelize"
 
 const sequelize = new Sequelize(
   process.env.MSSQL_DBNAME,
-  "prithwee@prithwee",
-  "Prith*977",
+  process.env.MSSQL_USER,
+  process.env.MSSQL_PASSWORD,
   {
-    host: "prithwee.database.windows.net",
+    host: process.env.MSSQL_HOST,
     dialect: "mssql",
     operatorsAliases: Sequelize.Op,
     dialectOptions: {
